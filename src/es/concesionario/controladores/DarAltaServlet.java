@@ -69,32 +69,45 @@ public class DarAltaServlet extends HttpServlet {
 	}
  	
  	/* 3 Pasarle los datos recuperados a la capa Negocio */
-    Negocio negocio = new Negocio();
-    int id=negocio.darAlta(matricula, marca, modelo, color, numcaballos, marchas);
     
-    // además de darlo de alta en la BBDD lo muestro...
-    // consultar el coche y...
-    //->Coche p=negocio.consultarUno(id);
-    // meter (setear) el coche en el request para que en vistaIndividual.jsp lo pueda recuperar
-    //->request.setAttribute("coche", p); // voy a consultar en BBDD por si borran el coche
+    //kk
     
-    //... redirigir a la vista individual
-    //->RequestDispatcher rd;
-    //->rd=request.getRequestDispatcher("vistaIndividual.jsp");
+    String darAlta=request.getParameter("darAlta");
+		   
+	Negocio negocio = new Negocio();
+	String mensajeDoGet=negocio.darAlta(matricula, marca, modelo, color, numcaballos, marchas);
+	   
+	// llamamos al método "darAlta" dentro de negocio.java
+	// negocio.darAlta es un metodo String que recibe "matricula, marca, modelo, color, numcaballos, marchas"
+	// y devuelve un String "msg" que no tiene por qué 
+	// llamarse igual que nuestra variable mensajeDoGet
     
-    //... o redirigir a la vista o consulta "mostrarTodos"
-    ArrayList<Coche> coches=negocio.consultarTodos();
+	if(darAlta==null)// si ha fallado el alta
+	{
+	  // meter el mensaje en el request
+	  request.setAttribute("mensajeVistaMensajeJsp", mensajeDoGet);
+	   
+  	  //redirigir a la vista el mensaje
 	
-	// meter el arrayList en el request
-	request.setAttribute("listado", coches);
-	// redirigir al código jsp "mostrarTodos"
-	RequestDispatcher rd;
-	rd=request.getRequestDispatcher("mostrarTodos.jsp");
-    // rd=request.getRequestDispatcher("mostrarTodos.jsp");
-    
-    rd.forward(request, response);
+	  RequestDispatcher rd=request.getRequestDispatcher("vistaMensaje.jsp");
+	  rd.forward(request, response);
+	  
+	}else{// si el alta ha ido bien
+      
+		// además de darlo de alta en la BBDD 
+		// muestro todos los coches...
+      
+		//... o redirigir a la vista o consulta "mostrarTodos"
+		ArrayList<Coche> coches=negocio.consultarTodos();
+	
+		// meter el arrayList en el request
+		request.setAttribute("listado", coches);
+		// redirigir al código jsp "mostrarTodos"
+		RequestDispatcher rd;
+		rd=request.getRequestDispatcher("mostrarTodos.jsp");
+		rd.forward(request, response);
+        }
     }
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

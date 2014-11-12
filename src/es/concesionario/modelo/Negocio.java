@@ -11,7 +11,7 @@ public class Negocio {
 	// a invocar desde muchos puntos del proyecto...
 	private CocheDAO cochedao = new CocheDAO();
 	
-	public int darAlta(//int id,
+	public String darAlta(//int id,
 			           String matricula,
 			           String marca,
 			           String modelo,
@@ -19,6 +19,7 @@ public class Negocio {
 			           int numcaballos,
 			           boolean marchas) 
 	{
+		String msg;
 		//Reglas de negocio: validar el vehículo...
 		
 	    Coche coche=new Coche(matricula, marca, modelo, color, numcaballos, marchas);
@@ -26,7 +27,17 @@ public class Negocio {
 		// 2 maneras de hacerlo (elegir una de ellas):
 		// 1era:
 		int id=cochedao.darAlta(coche);
-		return id;
+		
+		//kk
+		if(id>=1)
+		{
+			//creamos una variable tipo String para devolvérsela al Servlet
+			msg="Se ha dado de alta 1 vehículo. ";
+			
+		} else {msg="No se ha podido dar de alta. Quizá la matrícula ya exista.";}
+		return msg;
+		
+		//return id;
 		
 		// 2nda:
 		//return cochedao.darAlta(coche); // devolverá el id del País

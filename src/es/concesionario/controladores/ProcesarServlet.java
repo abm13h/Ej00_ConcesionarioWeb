@@ -76,9 +76,6 @@ public class ProcesarServlet extends HttpServlet {
 		   //redirigir a la vista el mensaje
 		   RequestDispatcher rd=request.getRequestDispatcher("vistaMensaje.jsp");
 		   rd.forward(request, response);
-		   
-		//
-		//
 	}
 
 	/**

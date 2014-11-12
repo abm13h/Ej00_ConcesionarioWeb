@@ -66,11 +66,9 @@ public class CocheDAO { // esta es la Clase que se va a comunicar con la BBDD
 						
 			// no sabemos si el insert irá ok...
 			if(filasAfectadas>=1)
-			{
-				idRetornar=ultimoId();
-			}
-			
-			
+			  {idRetornar=ultimoId();}
+			else
+			  {idRetornar=filasAfectadas;}
 			
 			// 5. cerrar la conexión
 			desconectar();
