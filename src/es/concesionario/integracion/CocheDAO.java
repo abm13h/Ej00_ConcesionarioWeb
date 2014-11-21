@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import es.concesionario.modelo.Coche;
 
@@ -23,10 +25,20 @@ public class CocheDAO { // esta es la Clase que se va a comunicar con la BBDD
          Class.forName("com.mysql.jdbc.Driver");
 		 cx= DriverManager.getConnection("jdbc:mysql://localhost:3306/concesionario","root","root");
          cx.setAutoCommit(false);
-        } catch (SQLException e) {e.printStackTrace();} catch (ClassNotFoundException e) {
+        } catch (SQLException e)
+		{
+       	    e.printStackTrace();
+       	 // no estamos haciendo ningun New de Logger
+       	 // por lo que tiene pinta de Patrón-Singleton
+       		
+       	  Logger logString=Logger.getLogger(this.getClass().getName().log(Level.SEVERE, "Cálculo ultimo id", e));
+       	}
+       	
+		catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 	private void desconectar()
 	{     
@@ -73,7 +85,14 @@ public class CocheDAO { // esta es la Clase que se va a comunicar con la BBDD
 			// 5. cerrar la conexión
 			desconectar();
 
-		} catch (SQLException e){e.printStackTrace();}
+		} catch (SQLException e)
+		{
+		  e.printStackTrace();
+		 // no estamos haciendo ningun New de Logger
+		 // tiene pinta de patrón singleton
+			
+		 //Logger logString=Logger.getLogger(this.getClass().getName().log(Level.SEVERE, "Cálculo ultimo id", e));
+		}
 				
 		return idRetornar; // ojo!
 	}
@@ -278,6 +297,15 @@ public class CocheDAO { // esta es la Clase que se va a comunicar con la BBDD
 			conectar();
 			
 			// 2. preparar la consulta sql
+			
+			// 2.1 Faltaría hacer un select previo para poder
+			//     comparar los datos que había con los datos
+			//     que se reciben y si no han cambiado nada
+			//     enviar un mensaje diciendo que "No se ha
+			//     modificado ningún campo. Si lo desea puede
+			//     modificar todos los campos excepto el Id y
+			//     la matrícula"...
+			//
 			// "PreparedStatement" es un objeto que permite desde Java
 			//  construir instrucciones SQL
 			PreparedStatement ps;

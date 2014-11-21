@@ -1,8 +1,5 @@
 package es.concesionario.modelo;
-
-
 import java.util.ArrayList;
-
 import es.concesionario.integracion.CocheDAO;
 import es.concesionario.modelo.Coche;
 
@@ -11,37 +8,31 @@ public class Negocio {
 	// a invocar desde muchos puntos del proyecto...
 	private CocheDAO cochedao = new CocheDAO();
 	
-	public String darAlta(//int id,
-			           String matricula,
-			           String marca,
-			           String modelo,
-			           String color,
-			           int numcaballos,
-			           boolean marchas) 
-	{
-		String msg;
+	public String darAlta(String matricula,
+			              String marca,
+			              String modelo,
+			              String color,
+			              int numcaballos,
+			              boolean marchas) 
+	{   String msg;
 		//Reglas de negocio: validar el vehículo...
-		
-	    Coche coche=new Coche(matricula, marca, modelo, color, numcaballos, marchas);
-		
+		Coche coche=new Coche(matricula, marca, modelo, color, numcaballos, marchas);
 		// 2 maneras de hacerlo (elegir una de ellas):
 		// 1era:
 		int id=cochedao.darAlta(coche);
 		
-		//kk
 		if(id>=1)
+		{//creamos una variable tipo String para devolvérsela al Servlet
+		 msg="Se ha dado de alta 1 vehículo. ";
+		}else
 		{
-			//creamos una variable tipo String para devolvérsela al Servlet
-			msg="Se ha dado de alta 1 vehículo. ";
-			
-		} else {msg="No se ha podido dar de alta. Quizá la matrícula ya exista.";}
+		msg="No se ha podido dar de alta. Quizá la matrícula ya exista.";
+		}
 		return msg;
-		
 		//return id;
-		
 		// 2nda:
 		//return cochedao.darAlta(coche); // devolverá el id del País
-	}
+	    }
 
 	public Coche consultarUno(int id) {
 		// se podría validar si el que solicita la consulta tiene
@@ -49,9 +40,6 @@ public class Negocio {
 		Coche coche = cochedao.consultarUno(id);
 		return coche; 
 	}
-
-	
-	
 	public ArrayList<Coche> consultarTodos() {
 		// aquí las reglas si las hubiera...
 		// llamar al DAO...
@@ -99,13 +87,10 @@ public class Negocio {
 		// metodo que devuelve un numero entero...
 		int filas=cochedao.actualizar(id, matricula, marca, modelo, color, numcaballos, marchas);
 		if(filas>=1)
-		{
-			//creamos una variable tipo String para devolvérsela al Servlet
-			msg="Se ha actualizado " + filas + " vehículo";
-			
-		} else {msg="No se ha podido actualizar";}
-	
+		{//creamos una variable tipo String para devolvérsela al Servlet
+		 msg="Se ha actualizado " + filas + " vehículo";
+		} else 
+		{msg="No se ha podido actualizar";}
 		return msg;
 	}
-
 }

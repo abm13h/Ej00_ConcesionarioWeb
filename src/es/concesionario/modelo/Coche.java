@@ -23,7 +23,6 @@ public class Coche
 	public Coche(String matricula, String marca, String modelo,
 			String color, int numcaballos, boolean marchas) {
 		super();
-		this.id = id;
 		this.matricula = matricula;
 		this.marca = marca;
 		this.modelo = modelo;

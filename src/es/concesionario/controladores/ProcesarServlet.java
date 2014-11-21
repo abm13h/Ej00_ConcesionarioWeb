@@ -69,7 +69,6 @@ public class ProcesarServlet extends HttpServlet {
 		   // y devuelve un String "msg" que no tiene por qué 
 		   // llamarse igual que nuestra variable mensajeDoGet
 		   
-		   
 		   // meter el mensaje en el request
 		   request.setAttribute("mensajeVistaMensajeJsp", mensajeDoGet);
 		   
